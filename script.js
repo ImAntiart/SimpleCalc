@@ -1,8 +1,7 @@
-/** @format */
 
 const currentInput = document.querySelector(".currentInput");
 const history = document.querySelector(".history");
-const buttons = document.querySelectorAll(".calcButtons button");
+const buttons = document.querySelectorAll(".calcButtons button, .clearButton");
 
 let currentExpression = "";
 
@@ -41,14 +40,19 @@ buttons.forEach((button) => {
 
     } else if (value === "=") {
       try {
-        const result = eval(currentExpression); // eval выполняет строку как JavaScript код
+        if (!isNaN(currentExpression)) {
+          return; 
+        }
+
+        const result = eval(currentExpression); 
         currentInput.textContent = result;
         history.innerHTML += `<div>${currentExpression} = ${result}</div>`;
-        currentExpression = result.toString();
+        currentExpression = result.toString(); 
       } catch (error) {
         currentInput.textContent = "Error";
         currentExpression = "";
       }
+
     }
   });
 });
